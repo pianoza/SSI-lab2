@@ -1,3 +1,5 @@
 *.zip
 weka*
 *~
+features/
+P2_*/
