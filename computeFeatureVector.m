@@ -10,7 +10,7 @@ if size(A,3) > 1,
 	A = rgb2gray(A);
 end
 
-glcm = graycomatrix(A);
+glcm = graycomatrix(A, 'Offset', [-2 2]);
 prop = graycoprops(glcm);
 v = [prop.Contrast, prop.Correlation, prop.Energy, prop.Homogeneity];
 %v = mean(A);
