@@ -15,8 +15,7 @@ dy = [1 1 0 -1];
 %distance = [2 4 8 16 32]; %0.8250, 0.8375(included entropy). using this and features of R,G,B and graylevel separately gave 0.85. used contrast, correlation, energy, homogeneity, entropy
 distance = [1, 32]; %0.9625 with mean and standard deviation of Hue and Sat
 v = [mean(mean(B(:,:,1))), std2(B(:,:,1)), mean(mean(B(:,:,2))), std2(B(:,:,2))];
-% TODO: try to quantize the VALUE channel
-% 0.9875 with NumLevels equal to 6
+% 0.9875 with NumLevels = 6.
 for i = 1:length(distance)
     for j = 1:length(dx);
         glcm = graycomatrix(B(:,:,3), 'Offset', [dx(j)*distance(i) dy(j)*distance(i)], 'Symmetric', false, 'NumLevels', 6);
@@ -24,6 +23,8 @@ for i = 1:length(distance)
         if isnan(prop.Correlation)
             prop.Correlation = 1.0;
         end;
+        % if I swap correlation and energy, the result will be: 0.9250,
+        % wtf??
         v = [v, prop.Contrast, prop.Correlation, prop.Energy, prop.Homogeneity, entropy(glcm)];
     end;
 end;
